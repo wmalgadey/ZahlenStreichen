@@ -63,7 +63,7 @@ namespace ZahlenStreichen
                 Console.WriteLine(String.Format("{2} run - {0} games in {1}ms - Diff {3}", 
                     currentSolutions.Count,
                     stopwatch.ElapsedMilliseconds, runs++, minDifficulty));
-            } while (currentSolutions.Count == 0);
+            } while (true);
 
             Console.ReadKey();
         }
