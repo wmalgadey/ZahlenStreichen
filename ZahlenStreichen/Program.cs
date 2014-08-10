@@ -60,9 +60,9 @@ namespace ZahlenStreichen
 
                 stopwatch.Stop();
 
-                Console.WriteLine(String.Format("{2} run - {0} games in {1}ms - Diff {3}", 
+                Console.WriteLine(String.Format("{2,4:N0} run - {0,5:N0} games in {1,10:N0}ms - Min. Solutions {3,4:N0}", 
                     currentSolutions.Count,
-                    stopwatch.ElapsedMilliseconds, runs++, minDifficulty));
+                    stopwatch.ElapsedMilliseconds, ++runs, minDifficulty));
             } while (true);
 
             Console.ReadKey();
