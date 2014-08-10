@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace ZahlenStreichen
 {
@@ -40,8 +41,9 @@ namespace ZahlenStreichen
 
             foreach (var value in Enumerable.Range(2, 18)
                 .Where(n => n != 10)
-                .Select(n => n.ToString())
-                .Aggregate((a, b) => a += b)
+                .Aggregate(new StringBuilder(),
+                        (a, b) => a.Append(b.ToString()))
+                .ToString()
                 .ToCharArray()
                 .Select(c => (int)char.GetNumericValue(c)))
             {
