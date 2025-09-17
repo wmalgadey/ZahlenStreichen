@@ -158,13 +158,19 @@ class NumberPuzzleSolver:
                     return False
         return True
     
-    def solve(self, max_depth=None):
-        """Löst das Puzzle mit Backtracking"""
+    def solve(self, max_depth=None, initial_move=None):
+        """Löst das Puzzle mit Backtracking, optional mit einem Startzug"""
         if max_depth is None:
             # Berechne maximale Tiefe basierend auf Anzahl der Zahlen
             total_numbers = sum(1 for row in self.board for val in row if val is not None)
             max_depth = total_numbers // 2
-        
+
+        if initial_move:
+            pos1, pos2 = initial_move
+            if self.can_remove_pair(pos1, pos2):
+                self.make_move(pos1, pos2)
+                print(f"Startzug: Entferne {self.board[pos1[0]][pos1[1]]} bei {pos1} und {self.board[pos2[0]][pos2[1]]} bei {pos2}")
+
         return self.backtrack(0, max_depth)
     
     def backtrack(self, depth, max_depth):
@@ -228,8 +234,44 @@ class NumberPuzzleSolver:
         return len(self.moves) > 0
 
 def main():
-    solver = NumberPuzzleSolver()
-    solver.solve_and_show_solution()
+    def recursive_solve(solver, depth=0):
+        """Rekursiv alle möglichen Solver durchgehen."""
+        if solver.is_solved():
+            print(f"🎉 Lösung gefunden auf Ebene {depth}!")
+            solver.print_board()
+            return [solver], []
+
+        moves = solver.get_all_valid_moves()
+        if not moves:
+            return [], [solver]  # Keine Lösung möglich
+
+        successful_solvers = []
+        failed_solvers = []
+        for pos1, pos2 in moves:
+            new_solver = NumberPuzzleSolver()
+            new_solver.board = [row[:] for row in solver.board]  # Kopiere das Brett
+            new_solver.moves = solver.moves[:]  # Kopiere die bisherigen Züge
+
+            new_solver.make_move(pos1, pos2)
+            success, failure = recursive_solve(new_solver, depth + 1)
+            successful_solvers.extend(success)
+            failed_solvers.extend(failure)
+
+        return successful_solvers, failed_solvers
+
+    # Initialer Solver
+    initial_solver = NumberPuzzleSolver()
+    initial_solver.print_board()
+
+    print("Starte rekursive Lösungssuche...")
+    successful_solvers, failed_solvers = recursive_solve(initial_solver)
+
+    print(f"Anzahl erfolgreicher Lösungen: {len(successful_solvers)}")
+    print(f"Anzahl fehlgeschlagener Lösungsversuche: {len(failed_solvers)}")
+
+    for i, solver in enumerate(successful_solvers):
+        print(f"Lösung {i + 1}:")
+        solver.print_board()
 
 if __name__ == "__main__":
     main()
