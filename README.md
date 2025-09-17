@@ -3,7 +3,7 @@ ZahlenStreichen
 
 A little project our last student apprentice lead us in. Couldn't sleep until I figured it out, how to solve this puzzle
 
-The game has some simple rules. First you note the numbers from 1 to 19 without the 10. Each digit is written in one column of a row (for 11 you put 1 and 1 in each cell). After 9 Columns you add another row. The starting board looks as follows:
+The rules: First you note the numbers from 1 to 19 without the 10. Each digit is written in one column of a row (for 11 you put 1 and 1 in each cell). After 9 Columns you add another row. The starting board looks as follows:
 
 <pre>
 123456789
@@ -11,7 +11,7 @@ The game has some simple rules. First you note the numbers from 1 to 19 without 
 516171819
 </pre>
 
-To solve the puzzle you have some rules:
+To solve the puzzle you apply the following actions:
 
 1. You can erase two numbers if a direct neighbor is equal or both added are 10
 2. a neighbor could be in every direction (up, down, left, right)
