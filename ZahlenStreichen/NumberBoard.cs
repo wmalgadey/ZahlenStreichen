@@ -38,13 +38,14 @@ namespace ZahlenStreichen
             var currentNumber = new Number(1, null);
             _numbers.Add(currentNumber);
 
-            var values = string.Empty;
-            foreach (int i in Enumerable.Range(2, 18))
-                values += i == 10 ? string.Empty : i.ToString();
-
-            foreach (var value in values.ToCharArray().Select(c => char.GetNumericValue(c)))
+            foreach (var value in Enumerable.Range(2, 18)
+                .Where(n => n != 10)
+                .Select(n => n.ToString())
+                .Aggregate((a, b) => a += b)
+                .ToCharArray()
+                .Select(c => (int)char.GetNumericValue(c)))
             {
-                currentNumber = new Number((int)value, currentNumber);
+                currentNumber = new Number(value, currentNumber);
                 _numbers.Add(currentNumber);
             }
         }
